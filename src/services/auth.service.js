@@ -5,21 +5,22 @@ const API_URL = "http://localhost:3000/api/v1/";
 class AuthService {
   login( email, password) {
     return axios
-              .post(API_URL + 'users/login', {
-                email,
-                password
-              })
-              .then(response => {
-                if (response.data.accessToken) {
-                  localStorage.setItem("user", JSON.stringify(response.data));
-                }
-
-                return response.data
-              });
+      .post(API_URL + 'users/login', {
+        email,
+        password
+      })
+      .then(response => {
+        if (response.data.token) {
+          localStorage.setItem("token", JSON.stringify(response.data.token));
+          localStorage.setItem("user", true);
+        }
+        return response.data
+      });
   }
 
   logout() {
-    localStorage.removeItem("user");
+    localStorage.setItem("user", false);
+    localStorage.removeItem("token");
   }
 
   signUp(name, email, password, passwordConfirm) {

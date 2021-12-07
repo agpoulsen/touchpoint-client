@@ -13,13 +13,13 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      currentUser: undefined
+      currentUser: null
     };
   }
 
   componentDidMount() {
     const user = AuthService.getCurrentUser();
-
+    console.log(user);
     if (user) {
       this.setState({ currentUser: user});
     }
@@ -27,13 +27,27 @@ class App extends Component {
 
   logOut() {
     AuthService.logout();
+    this.setState({ currentUser: null})
   }
 
   render() {
+
+    const testLogin = () => {
+      if (this.state.currentUser) {
+        return <p>Logged in</p>
+      } else {
+        return <p>Not logged in</p>
+      }
+    }
+
     return (
       <div>
 
         <div className='container'>
+          <nav>
+            {testLogin()}
+            <button onClick={this.logOut}>Log OUt</button>
+          </nav>
           <Switch>
             <Route exact path={['/', '/home']} component={ Home }/>
             <Route exact path={'/login'} component={ LoginForm }/>

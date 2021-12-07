@@ -42,7 +42,7 @@ export default class SignupForm extends Component {
       this.setState({
         message: response.data.message,
         successful: true
-      });
+      })
     },
       error => {
         const resMessage =
@@ -56,7 +56,11 @@ export default class SignupForm extends Component {
             successful: false,
             message: resMessage
           });
-      });
+      })
+      .then(() => {
+        this.props.history.push("/home");
+        window.location.reload();
+      });;
   }
 
   render() {
