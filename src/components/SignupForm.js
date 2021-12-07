@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import AuthService from "../services/auth.service";
+
 export default class SignupForm extends Component {
   constructor(props) {
     super(props)
@@ -7,7 +9,9 @@ export default class SignupForm extends Component {
       name: '',
       email: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+      successful: false,
+      message: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
@@ -19,9 +23,40 @@ export default class SignupForm extends Component {
     this.setState({ [name]: event.target.value })
   }
 
+
+
   _handleSubmit(event) {
     event.preventDefault();
 
+    this.setState({
+      message: "",
+      successful: false
+    });
+
+    AuthService.signUp(
+      this.state.name,
+      this.state.email,
+      this.state.password,
+      this.state.passwordConfirm
+    ).then( response => {
+      this.setState({
+        message: response.data.message,
+        successful: true
+      });
+    },
+      error => {
+        const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          this.setState({
+            successful: false,
+            message: resMessage
+          });
+      });
   }
 
   render() {
