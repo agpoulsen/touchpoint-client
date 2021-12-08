@@ -17,7 +17,20 @@ const api = {
     return res.data
   },
 
-  createTouchpoint() {},
+  async createTouchpoint( userId, payload) {
+    const token = JSON.parse(localStorage.getItem('token'));
+
+    const res = await axios({
+                        method: 'post',
+                        url: `${API_URL}/${userId}/touchpoints/`,
+                        data: payload,
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Accept' : 'application/json',
+                          'Content-Type': 'application/json'
+                        }
+    });
+  },
 
   async updateTouchpoint( userId, touchpointId, payload ) {
     const token = JSON.parse(localStorage.getItem('token'));

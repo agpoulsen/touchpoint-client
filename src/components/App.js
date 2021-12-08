@@ -6,6 +6,7 @@ import SignupForm from './SignupForm';
 import LoginForm from './LoginForm';
 import Touchpoints from './Touchpoints';
 import EditTouchpoint from './EditTouchpoint';
+import NewTouchpoint from './NewTouchpoint';
 
 import AuthService from "../services/auth.service";
 
@@ -63,9 +64,13 @@ class App extends Component {
             <Route exact path={'/login'} component={ LoginForm }/>
             <Route exact path={'/signup'} component={ SignupForm }/>
             <Route path={'/edit/touchpoint/:userId/:touchpointId'} component={ EditTouchpoint }/>
+            <Route exact path={'/:userId/touchpoint/new'}>
+              <NewTouchpoint userId={this.state.userId}/>
+            </Route>
             <Route path={'/:userId'}>
               <Touchpoints userId={this.state.userId} />
             </Route>
+
 
           </Switch>
         </div>

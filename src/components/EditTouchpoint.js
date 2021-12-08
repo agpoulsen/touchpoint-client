@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import TouchpointForm from './TouchpointForm';
 import api from './../services/api.service';
 
 export default class EditTouchpoint extends Component {
