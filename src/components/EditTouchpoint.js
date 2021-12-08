@@ -8,15 +8,17 @@ export default class EditTouchpoint extends Component {
     super(props)
 
     this.state = {
-      touchpoint: {
+        _id: '',
         touchpointType: '',
         date: '',
         companyName: '',
         roleOrPosition: '',
         contactPerson: '',
-        additionalNotes: ''
-      }
+        additionalNotes: '',
+        user: ""
     };
+    this.handleChange = this.handleChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +26,24 @@ export default class EditTouchpoint extends Component {
     api.getSingleTouchpoint( params.userId, params.touchpointId).then((response) => {
 
     const touchpoint = response.data.data.touchpoint;
-    this.setState({ touchpoint });
+    const {
+      _id,
+      touchpointType,
+      date,
+      companyName,
+      roleOrPosition,
+      contactPerson,
+      additionalNotes,
+      user
+    } = touchpoint;
+    this.setState({ _id,
+    touchpointType,
+    date,
+    companyName,
+    roleOrPosition,
+    contactPerson,
+    additionalNotes,
+    user });
   })
   }
 
@@ -32,6 +51,14 @@ export default class EditTouchpoint extends Component {
     const target = event.target;
     const name = target.name;
     this.setState({ [name]: event.target.value })
+  }
+
+  _handleSubmit(event) {
+    event.preventDefault();
+
+    const params = this.props.match.params;
+    api.updateTouchpoint( params.userId, params.touchpointId, this.state ).then(response => console.log(response));
+    this.props.history.push("/:userId");
   }
 
   render() {
@@ -42,36 +69,36 @@ export default class EditTouchpoint extends Component {
       <div className='container'>
         <h2>Edit Touchpoint</h2>
 
-        <form>
+        <form onSubmit={this._handleSubmit}>
 
           <label>
             Touchpoint Type:
-            <input type="text" name='touchpointType' onChange={this.handleChange} value={this.state.touchpoint.touchpointType || ""}/>
+            <input type="text" name='touchpointType' onChange={this.handleChange} value={this.state.touchpointType || ""}/>
           </label>
 
           <label>
             Date:
-            <input type="date" name='date' onChange={this.handleChange} value={this.state.touchpoint.date || ""}/>
+            <input type="date" name='date' onChange={this.handleChange} value={this.state.date || ""}/>
           </label>
 
           <label>
             Company Name:
-            <input type="text" name='companyName' onChange={this.handleChange} value={this.state.touchpoint.companyName || ""}/>
+            <input type="text" name='companyName' onChange={this.handleChange} value={this.state.companyName || ""}/>
           </label>
 
           <label>
             Role Position:
-            <input type="text" name='roleOrPosition' onChange={this.handleChange} value={this.state.touchpoint.roleOrPosition || ""}/>
+            <input type="text" name='roleOrPosition' onChange={this.handleChange} value={this.state.roleOrPosition || ""}/>
           </label>
 
           <label>
             Contact Person:
-            <input type="text" name='contactPerson' onChange={this.handleChange} value={this.state.touchpoint.contactPerson || ""}/>
+            <input type="text" name='contactPerson' onChange={this.handleChange} value={this.state.contactPerson || ""}/>
           </label>
 
           <label>
             Additional Notes:
-            <input type="text" name='additionalNotes' onChange={this.handleChange} value={this.state.touchpoint.additionalNotes || ""}/>
+            <input type="text" name='additionalNotes' onChange={this.handleChange} value={this.state.additionalNotes || ""}/>
           </label>
 
           <button>Submit</button>
