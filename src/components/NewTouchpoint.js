@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import api from './../services/api.service';
 
-export default class NewTouchpoint extends Component {
+class NewTouchpoint extends Component {
   constructor(props) {
     super(props)
 
@@ -30,7 +31,6 @@ export default class NewTouchpoint extends Component {
 
     api.createTouchpoint( this.props.userId, this.state ).then(response => console.log(response));
     this.props.history.push("/:userId");
-    window.location.reload();
   }
 
   render() {
@@ -80,3 +80,5 @@ export default class NewTouchpoint extends Component {
     )
   }
 }
+
+export default withRouter(NewTouchpoint);

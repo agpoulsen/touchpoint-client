@@ -65,7 +65,7 @@ class App extends Component {
             <Route exact path={'/signup'} component={ SignupForm }/>
             <Route path={'/edit/touchpoint/:userId/:touchpointId'} component={ EditTouchpoint }/>
             <Route exact path={'/:userId/touchpoint/new'}>
-              <NewTouchpoint userId={this.state.userId}/>
+              <NewTouchpoint userId={this.state.userId} />
             </Route>
             <Route path={'/:userId'}>
               <Touchpoints userId={this.state.userId} />

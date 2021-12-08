@@ -33,6 +33,8 @@ export default class Touchpoint extends Component {
       <div className='container'>
         <h1>User Touchpoints</h1>
 
+        <Link to="/:userId/touchpoint/new">Add New Touchpoint</Link>
+
         <table>
           <thead>
             <tr>

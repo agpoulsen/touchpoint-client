@@ -18,6 +18,7 @@ export default class EditTouchpoint extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
+    this._handleDelete = this._handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +58,12 @@ export default class EditTouchpoint extends Component {
 
     const params = this.props.match.params;
     api.updateTouchpoint( params.userId, params.touchpointId, this.state ).then(response => console.log(response));
+    this.props.history.push("/:userId");
+  }
+
+  _handleDelete(event) {
+    const params = this.props.match.params;
+    api.deleteTouchpoint( params.userId, params.touchpointId );
     this.props.history.push("/:userId");
   }
 
@@ -102,6 +109,10 @@ export default class EditTouchpoint extends Component {
 
           <button>Submit</button>
         </form>
+
+        <div>
+          <button onClick={this._handleDelete}>Delete</button>
+        </div>
 
       </div>
     )
