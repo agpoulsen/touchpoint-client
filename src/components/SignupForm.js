@@ -59,7 +59,6 @@ export default class SignupForm extends Component {
       })
       .then(() => {
         this.props.history.push("/home");
-        window.location.reload();
       });;
   }
 

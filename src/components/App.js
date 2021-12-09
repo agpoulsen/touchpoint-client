@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 
 import Home from './Home';
 import SignupForm from './SignupForm';
@@ -7,6 +7,7 @@ import LoginForm from './LoginForm';
 import Touchpoints from './Touchpoints';
 import EditTouchpoint from './EditTouchpoint';
 import NewTouchpoint from './NewTouchpoint';
+import RouteAuthenticated from './RouteAuthenticated';
 
 import AuthService from "../services/auth.service";
 
@@ -33,14 +34,22 @@ class App extends Component {
 
   logOut() {
     AuthService.logout();
-    this.setState({ currentUser: null })
-    this.setState({ userId: null})
+    this.setState({ currentUser: null });
+    this.setState({ userId: null});
+  }
+
+  isAuthenticated() {
+    if (this.state.currentUser){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   render() {
 
     const testLogin = () => {
-      if (this.state.currentUser) {
+      if (this.isAuthenticated()) {
         return <p>Logged in</p>
       } else {
         return <p>Not logged in</p>
@@ -70,7 +79,6 @@ class App extends Component {
             <Route path={'/:userId'}>
               <Touchpoints userId={this.state.userId} />
             </Route>
-
 
           </Switch>
         </div>

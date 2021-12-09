@@ -2,6 +2,9 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:3000/api/v1/";
 
+// https://mysterious-ridge-83896.herokuapp.com/api/v1/
+// http://localhost:3000/api/v1/
+
 class AuthService {
   login( email, password) {
     return axios
@@ -41,6 +44,16 @@ class AuthService {
 
   getUserId() {
     return JSON.parse(localStorage.getItem("userId"))
+  }
+
+  isAuthenticated() {
+    const token = JSON.parse(localStorage.getItem("userId"));
+
+    if (token) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

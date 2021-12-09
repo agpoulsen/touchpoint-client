@@ -32,7 +32,6 @@ export default class LoginForm extends Component {
     AuthService.login(this.state.email, this.state.password).then(
       () => {
         this.props.history.push("/home");
-        window.location.reload();
       },
       error => {
         const resMessage =

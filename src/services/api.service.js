@@ -3,6 +3,9 @@ import authHeader from './auth-header';
 
 const API_URL = 'http://localhost:3000/api/v1/users'
 
+// Production: https://mysterious-ridge-83896.herokuapp.com/api/v1/users
+// Development: http://localhost:3000/api/v1/users
+
 const api = {
   getAllUserTouchpoints(userId) {
     return axios.get(`${ API_URL }/${userId}/touchpoints`, authHeader() );
